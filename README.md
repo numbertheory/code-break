@@ -68,5 +68,6 @@ Invalid guess.
 
 ## Special commands
 
-q = Quit the game
+q = quit the game
+
 c = cheat (display the answer, helpful for debugging)

@@ -8,9 +8,13 @@ than anything useful, but it does work.
 When the game starts a secret code consisting of these colors is generated:
 
 g = green
+
 r = red
+
 b = blue
+
 p = purple
+
 y = yellow
 
 The code does not have to contain all the colors, and repeats of colors are
@@ -42,6 +46,7 @@ As you guess, the guess counter increases, and your guess history is displayed
 ```
 
 C = A token is in the correct position with the correct color
+
 W = A token is in the wrong position, but with a correct color
 
 The hints always display `C` tokens first, and then `W` tokens. The position

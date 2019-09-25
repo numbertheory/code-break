@@ -143,7 +143,7 @@ while guess < (maximum_guesses + 1):
 
         if rc_rp == 5:
             print(declare_winner(guess, display_combo(list_guess)))
-            break
+            exit(0)
         else:
             guess_history.append(
                 {"guess": list_guess, "hints": give_hints(rc_rp, rc_wp)})

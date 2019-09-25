@@ -42,14 +42,58 @@ def find_intersection(guess, game):
     return False
 
 
-def declare_winner(guesses):
-    return "You win! It only took you {} tries.".format(guesses)
+def declare_winner(guesses, final_guess):
+    if guesses == 1:
+        try_text = "try"
+    else:
+        try_text = "tries"
+    return "You win! It only took you {} {}.\n" \
+           "WINNER: {}".format(guesses, try_text, " | ".join(final_guess))
+
+
+def declare_loser(game):
+    return "You lose!\n" \
+           "SOLUTION: {}".format(" | ".join(display_combo(game)))
+
+
+def display_combo(row):
+    output = list()
+    color = {'y': 'yellow', 'g': 'green',
+             'r': 'red', 'b': 'blue',
+             'p': 'purple'}
+    for cell in row:
+        output.append(colorize(color[cell], "█"))
+    return output
+
+
+def display_hints(row):
+    output = list()
+    color = {'C': 'standard', 'W': 'standard'}
+    for cell in row:
+        output.append(colorize(color[cell], cell))
+    if len(output) < 5:
+        for pad in range(0, 5 - len(output)):
+            output.append(colorize('standard', '-'))
+    return output
 
 
 def give_hints(rc_rp, rc_wp):
     rc_rp_hints = ["C" for x in range(0, rc_rp)]
     rc_wp_hints = ["W" for x in range(0, rc_wp)]
     return rc_rp_hints + rc_wp_hints
+
+
+def display_guess_history(guess_history):
+    guess_history_index = 1
+    print("      Guesses        |       Hint     ")
+    print("--------------------------------------")
+    for guess_entry in guess_history:
+        print("#{} ".format(guess_history_index), end="")
+        print(" | ".join(display_combo(guess_entry["guess"])), end=" ")
+        print("|       ", end="")
+        print("".join(display_hints(guess_entry["hints"])))
+        print("--------------------------------------")
+        guess_history_index += 1
 
 
 guess = 1
@@ -98,19 +142,23 @@ while guess < (maximum_guesses + 1):
                 rc_wp += 1
 
         if rc_rp == 5:
-            print(declare_winner(guess))
+            print(declare_winner(guess, display_combo(list_guess)))
             break
         else:
             guess_history.append(
                 {"guess": list_guess, "hints": give_hints(rc_rp, rc_wp)})
-            print(guess_history)
+            display_guess_history(guess_history)
             guess += 1
 
     elif verify_guess(guess_text.lower()):
         list_guess = [x for x in guess_text.lower()]
         guess_history.append(
             {"guess": list_guess, "hints": give_hints(rc_rp, rc_wp)})
-        print(guess_history)
+        display_guess_history(guess_history)
         guess += 1
     else:
         print('Invalid guess.')
+
+# If this executes, the game is lost!
+
+print(declare_loser(game))

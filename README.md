@@ -3,6 +3,15 @@
 Standard code break game. This is more of a demonstration/code exercise
 than anything useful, but it does work.
 
+## Running the game
+
+This game runs in python3, since that handles Unicode and bash control characters
+a bit better.
+
+```
+python3 code-break.py
+```
+
 ## Controls
 
 When the game starts a secret code consisting of these colors is generated:
